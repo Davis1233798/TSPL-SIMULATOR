@@ -15,7 +15,7 @@ const resources = {
       // Language
       language: '語言',
       
-      // Editor
+      // Editor & Controls
       editor: '編輯器',
       preview: '預覽',
       validate: '驗證',
@@ -25,6 +25,7 @@ const resources = {
       // Examples
       examples: '範例',
       selectExample: '選擇範例',
+      selectExamplePlaceholder: '-- 選擇範例 --',
       
       // Status
       loading: '載入中...',
@@ -38,7 +39,24 @@ const resources = {
       
       // Validation
       validationErrors: '驗證錯誤',
-      noErrors: '沒有錯誤',
+      backendValidationErrors: '後端驗證錯誤',
+      syntaxCheck: '語法檢查',
+      noErrors: '✓ 無錯誤',
+      errorsCount: '個錯誤',
+      warningsCount: '個警告',
+      line: '行',
+      command: '命令',
+      hint: '💡 提示: 請修正上述錯誤後再次嘗試渲染',
+      
+      // Messages
+      enterTSPLCommand: '請輸入 TSPL 命令',
+      loadExamplesFailed: '載入範例失敗',
+      renderFailed: '渲染失敗',
+      syntaxValidationFailed: 'TSPL 語法驗證失敗',
+      
+      // Buttons
+      previewButton: '預覽',
+      clearButton: '清除',
       
       // Footer
       madeWith: '使用',
@@ -58,7 +76,7 @@ const resources = {
       // Language
       language: 'Language',
       
-      // Editor
+      // Editor & Controls
       editor: 'Editor',
       preview: 'Preview',
       validate: 'Validate',
@@ -68,6 +86,7 @@ const resources = {
       // Examples
       examples: 'Examples',
       selectExample: 'Select Example',
+      selectExamplePlaceholder: '-- Select Example --',
       
       // Status
       loading: 'Loading...',
@@ -81,7 +100,24 @@ const resources = {
       
       // Validation
       validationErrors: 'Validation Errors',
-      noErrors: 'No Errors',
+      backendValidationErrors: 'Backend Validation Errors',
+      syntaxCheck: 'Syntax Check',
+      noErrors: '✓ No Errors',
+      errorsCount: 'errors',
+      warningsCount: 'warnings',
+      line: 'Line',
+      command: 'Command',
+      hint: '💡 Hint: Please fix the above errors before rendering',
+      
+      // Messages
+      enterTSPLCommand: 'Please enter TSPL command',
+      loadExamplesFailed: 'Failed to load examples',
+      renderFailed: 'Render failed',
+      syntaxValidationFailed: 'TSPL syntax validation failed',
+      
+      // Buttons
+      previewButton: 'Preview',
+      clearButton: 'Clear',
       
       // Footer
       madeWith: 'Made with',
@@ -101,7 +137,7 @@ const resources = {
       // Language
       language: '言語',
       
-      // Editor
+      // Editor & Controls
       editor: 'エディター',
       preview: 'プレビュー',
       validate: '検証',
@@ -111,6 +147,7 @@ const resources = {
       // Examples
       examples: '例',
       selectExample: '例を選択',
+      selectExamplePlaceholder: '-- 例を選択 --',
       
       // Status
       loading: '読み込み中...',
@@ -124,7 +161,24 @@ const resources = {
       
       // Validation
       validationErrors: '検証エラー',
-      noErrors: 'エラーなし',
+      backendValidationErrors: 'バックエンド検証エラー',
+      syntaxCheck: '構文チェック',
+      noErrors: '✓ エラーなし',
+      errorsCount: 'エラー',
+      warningsCount: '警告',
+      line: '行',
+      command: 'コマンド',
+      hint: '💡 ヒント: レンダリングする前に上記のエラーを修正してください',
+      
+      // Messages
+      enterTSPLCommand: 'TSPLコマンドを入力してください',
+      loadExamplesFailed: '例の読み込みに失敗しました',
+      renderFailed: 'レンダリングに失敗しました',
+      syntaxValidationFailed: 'TSPL構文検証に失敗しました',
+      
+      // Buttons
+      previewButton: 'プレビュー',
+      clearButton: 'クリア',
       
       // Footer
       madeWith: '作成',
@@ -137,7 +191,7 @@ i18n
   .use(initReactI18next)
   .init({
     resources,
-    lng: 'zh-TW', // 默認語言
+    lng: 'zh-TW',
     fallbackLng: 'en',
     interpolation: {
       escapeValue: false

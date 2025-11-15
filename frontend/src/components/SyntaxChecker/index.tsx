@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { validateTSPL, ValidationResult } from '../../services/tsplValidator';
+import { useTranslation } from 'react-i18next';
 import './styles.css';
 
 interface SyntaxCheckerProps {
@@ -7,6 +8,7 @@ interface SyntaxCheckerProps {
 }
 
 const SyntaxChecker: React.FC<SyntaxCheckerProps> = ({ tsplCode }) => {
+  const { t } = useTranslation();
   const [validation, setValidation] = useState<ValidationResult | null>(null);
 
   useEffect(() => {
@@ -25,11 +27,11 @@ const SyntaxChecker: React.FC<SyntaxCheckerProps> = ({ tsplCode }) => {
   return (
     <div className="syntax-checker">
       <div className="syntax-checker-header">
-        <h4>語法檢查</h4>
+        <h4>{t('syntaxCheck')}</h4>
         {validation.isValid ? (
-          <span className="status-badge status-success">✓ 無錯誤</span>
+          <span className="status-badge status-success">{t('noErrors')}</span>
         ) : (
-          <span className="status-badge status-error">✗ {validation.errors.length} 個錯誤</span>
+          <span className="status-badge status-error">✗ {validation.errors.length} {t('errorsCount')}</span>
         )}
       </div>
 
@@ -38,7 +40,7 @@ const SyntaxChecker: React.FC<SyntaxCheckerProps> = ({ tsplCode }) => {
           <div key={`error-${index}`} className="validation-message validation-error">
             <span className="message-icon">❌</span>
             <div className="message-content">
-              {error.line > 0 && <span className="line-number">行 {error.line}:</span>}
+              {error.line > 0 && <span className="line-number">{t('line')} {error.line}:</span>}
               <span className="message-text">{error.message}</span>
             </div>
           </div>
@@ -48,7 +50,7 @@ const SyntaxChecker: React.FC<SyntaxCheckerProps> = ({ tsplCode }) => {
           <div key={`warning-${index}`} className="validation-message validation-warning">
             <span className="message-icon">⚠️</span>
             <div className="message-content">
-              {warning.line > 0 && <span className="line-number">行 {warning.line}:</span>}
+              {warning.line > 0 && <span className="line-number">{t('line')} {warning.line}:</span>}
               <span className="message-text">{warning.message}</span>
             </div>
           </div>

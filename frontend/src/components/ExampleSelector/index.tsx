@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getExamples } from '../../services/tsplApi';
 import { Example } from '../../types/api';
+import { useTranslation } from 'react-i18next';
 import './styles.css';
 
 interface ExampleSelectorProps {
@@ -8,6 +9,7 @@ interface ExampleSelectorProps {
 }
 
 const ExampleSelector: React.FC<ExampleSelectorProps> = ({ onSelectExample }) => {
+  const { t } = useTranslation();
   const [examples, setExamples] = useState<Example[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -21,7 +23,7 @@ const ExampleSelector: React.FC<ExampleSelectorProps> = ({ onSelectExample }) =>
       const response = await getExamples();
       setExamples(response.examples);
     } catch (error) {
-      console.error('載入範例失敗:', error);
+      console.error(t('loadExamplesFailed'), error);
     } finally {
       setLoading(false);
     }
@@ -33,7 +35,7 @@ const ExampleSelector: React.FC<ExampleSelectorProps> = ({ onSelectExample }) =>
 
   return (
     <div className="example-selector">
-      <label htmlFor="example-select">選擇範例:</label>
+      <label htmlFor="example-select">{t('selectExample')}:</label>
       <select
         id="example-select"
         onChange={(e) => {
@@ -44,7 +46,7 @@ const ExampleSelector: React.FC<ExampleSelectorProps> = ({ onSelectExample }) =>
         }}
         disabled={loading}
       >
-        <option value="">-- 選擇範例 --</option>
+        <option value="">{t('selectExamplePlaceholder')}</option>
         {examples.map((example) => (
           <option key={example.name} value={example.name}>
             {example.name} - {example.description}

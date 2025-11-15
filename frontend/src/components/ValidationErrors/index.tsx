@@ -1,5 +1,6 @@
 import React from 'react';
 import { ValidationError } from '../../types/api';
+import { useTranslation } from 'react-i18next';
 import './styles.css';
 
 interface ValidationErrorsProps {
@@ -7,6 +8,8 @@ interface ValidationErrorsProps {
 }
 
 const ValidationErrors: React.FC<ValidationErrorsProps> = ({ errors }) => {
+  const { t } = useTranslation();
+
   if (!errors || errors.length === 0) {
     return null;
   }
@@ -14,8 +17,8 @@ const ValidationErrors: React.FC<ValidationErrorsProps> = ({ errors }) => {
   return (
     <div className="validation-errors">
       <div className="validation-errors-header">
-        <h4>後端驗證錯誤</h4>
-        <span className="error-count">{errors.length} 個錯誤</span>
+        <h4>{t('backendValidationErrors')}</h4>
+        <span className="error-count">{errors.length} {t('errorsCount')}</span>
       </div>
 
       <div className="validation-errors-list">
@@ -24,10 +27,10 @@ const ValidationErrors: React.FC<ValidationErrorsProps> = ({ errors }) => {
             <div className="error-icon">❌</div>
             <div className="error-content">
               {error.line > 0 && (
-                <div className="error-line">行 {error.line}</div>
+                <div className="error-line">{t('line')} {error.line}</div>
               )}
               {error.command && (
-                <div className="error-command">命令: {error.command}</div>
+                <div className="error-command">{t('command')}: {error.command}</div>
               )}
               <div className="error-message">{error.message}</div>
             </div>
@@ -36,7 +39,7 @@ const ValidationErrors: React.FC<ValidationErrorsProps> = ({ errors }) => {
       </div>
 
       <div className="validation-errors-footer">
-        <p>💡 提示: 請修正上述錯誤後再次嘗試渲染</p>
+        <p>{t('hint')}</p>
       </div>
     </div>
   );

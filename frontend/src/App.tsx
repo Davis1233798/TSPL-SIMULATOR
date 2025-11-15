@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 import SEO from './components/SEO';
 import Header from './components/Header';
+import GoogleAd from './components/GoogleAd';
 import TSPLEditor from './components/TSPLEditor';
 import LabelPreview from './components/LabelPreview';
 import ControlPanel from './components/ControlPanel';
@@ -47,6 +48,9 @@ const App: React.FC = () => {
       <SEO />
       <Header />
 
+      {/* 頂部橫幅廣告 */}
+      <GoogleAd slot="1234567890" format="horizontal" />
+
       <div className="app-container">
         <div className="left-panel">
           <ExampleSelector onSelectExample={handleCodeChange} />
@@ -75,6 +79,9 @@ const App: React.FC = () => {
               <strong>{t('error')}:</strong> {error}
             </div>
           )}
+
+          {/* 左側邊欄廣告 */}
+          <GoogleAd slot="0987654321" format="rectangle" />
         </div>
 
         <div className="right-panel">
@@ -82,6 +89,9 @@ const App: React.FC = () => {
             renderData={renderData}
             isLoading={isLoading}
           />
+
+          {/* 右側邊欄廣告 */}
+          <GoogleAd slot="1122334455" format="rectangle" />
         </div>
       </div>
     </div>

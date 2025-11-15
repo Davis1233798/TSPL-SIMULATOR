@@ -1,0 +1,36 @@
+.google-ad-container {
+  margin: 1rem 0;
+  padding: 1rem;
+  background-color: var(--bg-secondary);
+  border: 1px dashed var(--border-color);
+  border-radius: 8px;
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.google-ad-container:hover {
+  border-color: #667eea;
+}
+
+/* 廣告佔位符 (在沒有廣告時顯示) */
+.google-ad-container:empty::before {
+  content: '📢 廣告區域';
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  opacity: 0.5;
+}
+
+[data-theme="dark"] .google-ad-container {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* 響應式廣告 */
+@media (max-width: 768px) {
+  .google-ad-container {
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+  }
+}

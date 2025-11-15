@@ -2,6 +2,7 @@ import React from 'react';
 import { renderTSPL } from '../../services/tsplApi';
 import { RenderData } from '../../types/tspl';
 import { ValidationError } from '../../types/api';
+import { useTranslation } from 'react-i18next';
 import './styles.css';
 
 interface ControlPanelProps {
@@ -19,9 +20,11 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
   onError,
   onValidationErrors,
 }) => {
+  const { t } = useTranslation();
+
   const handlePreview = async () => {
     if (!tsplCode.trim()) {
-      onError('請輸入 TSPL 命令');
+      onError(t('enterTSPLCommand'));
       return;
     }
 
@@ -35,18 +38,17 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
       if (response.success && response.data) {
         onRenderDataUpdate(response.data);
       } else {
-        // 處理驗證錯誤
         if (response.validation_errors && response.validation_errors.length > 0) {
           if (onValidationErrors) {
             onValidationErrors(response.validation_errors);
           }
-          onError(response.error || 'TSPL 語法驗證失敗');
+          onError(response.error || t('syntaxValidationFailed'));
         } else {
-          onError(response.error || '渲染失敗');
+          onError(response.error || t('renderFailed'));
         }
       }
     } catch (error: any) {
-      onError(error.message || '渲染失敗');
+      onError(error.message || t('renderFailed'));
       onRenderDataUpdate(null);
     } finally {
       onLoadingChange(false);
@@ -62,10 +64,10 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
   return (
     <div className="control-panel">
       <button className="btn btn-primary" onClick={handlePreview}>
-        預覽
+        {t('previewButton')}
       </button>
       <button className="btn btn-secondary" onClick={handleClear}>
-        清除
+        {t('clearButton')}
       </button>
     </div>
   );
