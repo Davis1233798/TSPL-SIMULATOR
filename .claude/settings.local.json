@@ -19,7 +19,9 @@
       "Bash(powershell -Command \"cd backend; go build -o tspl-simulator.exe .\")",
       "Bash(powershell -Command \"where.exe go\")",
       "Bash(powershell -Command \"New-Item -ItemType Directory -Force -Path .github\\workflows\")",
-      "Bash(git remote set-url:*)"
+      "Bash(git remote set-url:*)",
+      "Bash(ssh:*)",
+      "Bash(git rm:*)"
     ],
     "deny": [],
     "ask": []
