@@ -21,16 +21,26 @@ export interface RenderRequest {
   height?: number;
 }
 
+// 驗證錯誤
+export interface ValidationError {
+  line: number;
+  command: string;
+  message: string;
+}
+
 // 渲染回應
 export interface RenderResponse {
   success: boolean;
   data?: RenderData;
+  error?: string;
+  validation_errors?: ValidationError[];
 }
 
 // 錯誤回應
 export interface ErrorResponse {
   error: string;
   details?: string;
+  validation_errors?: ValidationError[];
 }
 
 // 範例

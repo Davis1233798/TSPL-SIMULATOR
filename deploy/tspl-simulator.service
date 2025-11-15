@@ -1,0 +1,25 @@
+[Unit]
+Description=TSPL Simulator Service
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/opt/tspl-simulator/backend
+EnvironmentFile=/opt/tspl-simulator/backend/.env
+ExecStart=/opt/tspl-simulator/backend/tspl-simulator
+Restart=on-failure
+RestartSec=5s
+
+# 安全設置
+NoNewPrivileges=true
+PrivateTmp=true
+
+# 日誌設置
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=tspl-simulator
+
+[Install]
+WantedBy=multi-user.target

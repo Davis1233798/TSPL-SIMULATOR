@@ -1,5 +1,7 @@
 # TSPL Simulator
 
+一個功能完整的 TSPL (TSC Printer Language) 標籤列印模擬器,支援即時語法檢查、標籤預覽和自動檔案儲存。
+
 [English](#english) | [中文](#chinese)
 
 ---
@@ -7,72 +9,102 @@
 <a name="english"></a>
 ## English
 
-A web-based TSPL (TSC Printer Language) label simulator and preview tool.
+A full-stack TSPL (TSC Printer Language) label simulator and preview tool with backend validation and file storage.
 
-**✨ Runs entirely in your browser - No backend required!**
+**✨ Features both frontend and backend validation with automatic file storage!**
 
 ### Features
 
-- 📝 Online TSPL editor with syntax highlighting
-- 🔍 Real-time syntax validation
-- 👁️ Live label preview
-- 🎨 Support for text, barcodes, QR codes, and graphics
-- 💻 Pure frontend implementation
+- ✅ **Dual Validation**: Frontend real-time checking + Backend strict validation
+- 📝 Online TSPL editor with syntax validation
+- 🔍 Intelligent error reporting with line numbers and suggestions
+- 👁️ Live label preview with Canvas rendering
+- 💾 **Automatic file storage** - API and MQTT requests saved with date/time organization
+- 🎨 Support for text, barcodes, QR codes, and graphics (30+ TSPL commands)
 - 📱 Responsive web interface
-- 🚀 Ready to use - No installation needed
+- 🚀 **Ready for production** - Backend with Go + Frontend with React
 - 📦 10+ built-in examples
 
 ### Tech Stack
 
-- **Frontend**: React + TypeScript
+- **Backend**: Go 1.21+ with Gin framework
+- **Frontend**: React 18 + TypeScript
 - **Rendering**: HTML5 Canvas
-- **Architecture**: Pure frontend (no backend needed)
+- **MQTT**: Eclipse Paho (optional)
+- **Architecture**: Full-stack with dual validation
 
 ### Quick Start
 
 #### Requirements
 
-- Node.js 18+
-- npm or yarn
+- **Go 1.21+** - [Download](https://go.dev/dl/)
+- **Node.js 16+** and npm - [Download](https://nodejs.org/)
 
-#### Installation & Running
+#### Running the Application
 
-```bash
-# Navigate to frontend directory
+**Step 1: Start Backend** (PowerShell)
+```powershell
+cd backend
+go run main.go
+```
+
+Expected output:
+```
+儲存服務已初始化: ./data
+伺服器運行於 :8080
+API 資料儲存路徑: ./data/API_print
+```
+
+**Step 2: Start Frontend** (New PowerShell window)
+```powershell
 cd frontend
-
-# Install dependencies (if not already installed)
-npm install
-
-# Start development server
+npm install  # First time only
 npm start
 ```
 
 The application will open at http://localhost:3000
 
+**👉 See [QUICK_START.md](QUICK_START.md) for detailed 30-second guide!**
+
 #### Build for Production
 
-```bash
+**Backend**:
+```powershell
+cd backend
+go build -o tspl-simulator.exe .
+```
+
+**Frontend**:
+```powershell
 cd frontend
 npm run build
 ```
 
-Build files will be in `frontend/build/` directory, ready for deployment to any static hosting service.
+Build files will be in `frontend/build/` directory and backend executable `tspl-simulator.exe` is ready for deployment.
 
-### Supported TSPL Commands
+### Supported TSPL Commands (30+)
 
-- **SIZE** - Set label dimensions
-- **GAP** - Set label gap
-- **DIRECTION** - Set print direction
-- **CLS** - Clear buffer
-- **TEXT** - Print text
-- **BARCODE** - Print barcodes (Code 128, Code 39, EAN13, etc.)
-- **QRCODE** - Print QR codes
-- **BOX** - Draw rectangles
-- **BAR** - Draw solid bars/lines
-- **PRINT** - Execute print
+**Basic Commands**:
+- **SIZE**, **GAP**, **CLS**, **PRINT** - Label setup and printing
+- **DIRECTION** (0-3) - Print direction with validation
 
-For detailed command reference, see [docs/TSPL_COMMANDS.md](./docs/TSPL_COMMANDS.md)
+**Text Commands**:
+- **TEXT** - Print text with font, rotation, and scaling
+
+**Barcode Commands**:
+- **BARCODE** - 1D barcodes (Code 128, Code 39, EAN13, etc.)
+- **QRCODE** - QR codes with error correction levels
+
+**Graphics Commands**:
+- **BOX**, **BAR**, **BITMAP** - Rectangles, lines, and images
+
+**Settings Commands**:
+- **DENSITY** (0-15), **SPEED** (1-14) - Print quality and speed with validation
+- **OFFSET**, **REFERENCE**, **SHIFT** - Position adjustments
+
+**Backend validates all parameter ranges and formats!**
+
+For detailed command reference, see [BACKEND_IMPLEMENTATION.md](BACKEND_IMPLEMENTATION.md)
 
 ### Built-in Examples
 
@@ -103,23 +135,56 @@ QRCODE 400,200,H,5,A,0,"https://example.com"
 PRINT 1,1
 ```
 
+### Automatic File Storage 💾
+
+All validated TSPL submissions are automatically saved:
+
+**File Structure**:
+```
+backend/data/
+├── API_print/
+│   └── 2025_11_15/              ← Year_Month_Day
+│       ├── 21_30_45.tspl        ← Hour_Minute_Second
+│       ├── 21_31_20.tspl
+│       └── 21_35_00.tspl
+└── MQTT_print/
+    └── 2025_11_15/
+        └── 22_15_30.tspl
+```
+
+**Only validation-passed requests are saved!** ✅
+
+### Documentation 📚
+
+Complete documentation is available:
+
+- **[QUICK_START.md](QUICK_START.md)** - 30-second quick start guide
+- **[TESTING_GUIDE.md](TESTING_GUIDE.md)** - 7 comprehensive test cases
+- **[RUNNING_THE_PROJECT.md](RUNNING_THE_PROJECT.md)** - Detailed setup and troubleshooting
+- **[BACKEND_IMPLEMENTATION.md](BACKEND_IMPLEMENTATION.md)** - Backend technical details
+- **[FRONTEND_IMPLEMENTATION.md](FRONTEND_IMPLEMENTATION.md)** - Frontend technical details
+- **[PROJECT_OVERVIEW.md](PROJECT_OVERVIEW.md)** - Full project architecture
+
 ### Deployment
 
-#### Vercel (Recommended)
+#### Backend
+Deploy the Go binary to any VPS or cloud platform:
+```powershell
+go build -o tspl-simulator.exe .
+# Upload and run on server
+```
 
+#### Frontend
+
+**Vercel** (Recommended):
 ```bash
-npm i -g vercel
 cd frontend
 vercel --prod
 ```
 
-#### Netlify
+**Netlify**: Drag and drop the `frontend/build` folder
 
-Drag and drop the `frontend/build` folder to Netlify.
-
-#### GitHub Pages
-
-Add deployment script to `frontend/package.json` and run `npm run deploy`.
+**GitHub Pages**: Add deployment script to `frontend/package.json`
 
 ### Browser Support
 
@@ -143,48 +208,62 @@ Issues and Pull Requests are welcome!
 <a name="chinese"></a>
 ## 中文
 
-一個基於網頁的 TSPL (TSC Printer Language) 標籤模擬器和預覽工具。
+一個功能完整的 TSPL (TSC Printer Language) 標籤列印模擬器,支援即時語法檢查、標籤預覽和自動檔案儲存。
 
-**✨ 完全在瀏覽器中運行 - 無需後端!**
+**✨ 前後端雙重驗證 + 自動檔案儲存!**
 
 ### 功能特色
 
-- 📝 線上 TSPL 編輯器,支援語法高亮
-- 🔍 即時語法驗證
-- 👁️ 即時標籤預覽
-- 🎨 支援文字、條碼、QR Code 和圖形
-- 💻 純前端實作
+- ✅ **雙重驗證**: 前端即時檢查 + 後端嚴格驗證
+- 📝 線上 TSPL 編輯器,支援語法驗證
+- 🔍 智能錯誤報告,包含行號和修正建議
+- 👁️ 即時標籤預覽 (Canvas 渲染)
+- 💾 **自動檔案儲存** - API 和 MQTT 請求按日期/時間組織
+- 🎨 支援文字、條碼、QR Code 和圖形 (30+ TSPL 命令)
 - 📱 響應式網頁介面
-- 🚀 開啟即用 - 無需安裝
+- 🚀 **生產就緒** - Go 後端 + React 前端
 - 📦 10+ 內建範例
 
 ### 技術棧
 
-- **前端**: React + TypeScript
+- **後端**: Go 1.21+ with Gin 框架
+- **前端**: React 18 + TypeScript
 - **渲染**: HTML5 Canvas
-- **架構**: 純前端 (不需要後端)
+- **MQTT**: Eclipse Paho (可選)
+- **架構**: 全端雙重驗證
 
 ### 快速開始
 
 #### 環境需求
 
-- Node.js 18+
-- npm 或 yarn
+- **Go 1.21+** - [下載](https://go.dev/dl/)
+- **Node.js 16+** 和 npm - [下載](https://nodejs.org/)
 
-#### 安裝與執行
+#### 運行應用
 
-```bash
-# 進入前端目錄
+**步驟 1: 啟動後端** (PowerShell)
+```powershell
+cd backend
+go run main.go
+```
+
+預期輸出:
+```
+儲存服務已初始化: ./data
+伺服器運行於 :8080
+API 資料儲存路徑: ./data/API_print
+```
+
+**步驟 2: 啟動前端** (新 PowerShell 視窗)
+```powershell
 cd frontend
-
-# 安裝依賴 (如果還沒安裝)
-npm install
-
-# 啟動開發服務器
+npm install  # 僅首次需要
 npm start
 ```
 
 應用將在 http://localhost:3000 啟動
+
+**👉 詳見 [QUICK_START.md](QUICK_START.md) 查看 30 秒快速指南!**
 
 #### 建置生產版本
 

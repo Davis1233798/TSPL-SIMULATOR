@@ -5,17 +5,21 @@ import LabelPreview from './components/LabelPreview';
 import ControlPanel from './components/ControlPanel';
 import ExampleSelector from './components/ExampleSelector';
 import SyntaxChecker from './components/SyntaxChecker';
+import ValidationErrors from './components/ValidationErrors';
 import { RenderData } from './types/tspl';
+import { ValidationError } from './types/api';
 
 const App: React.FC = () => {
   const [tsplCode, setTsplCode] = useState<string>('');
   const [renderData, setRenderData] = useState<RenderData | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
+  const [validationErrors, setValidationErrors] = useState<ValidationError[]>([]);
 
   const handleCodeChange = (code: string) => {
     setTsplCode(code);
     setError('');
+    setValidationErrors([]);
   };
 
   const handleRenderDataUpdate = (data: RenderData | null) => {
@@ -28,6 +32,10 @@ const App: React.FC = () => {
 
   const handleError = (errorMsg: string) => {
     setError(errorMsg);
+  };
+
+  const handleValidationErrors = (errors: ValidationError[]) => {
+    setValidationErrors(errors);
   };
 
   return (
@@ -53,9 +61,14 @@ const App: React.FC = () => {
             onRenderDataUpdate={handleRenderDataUpdate}
             onLoadingChange={handleLoadingChange}
             onError={handleError}
+            onValidationErrors={handleValidationErrors}
           />
 
-          {error && (
+          {validationErrors.length > 0 && (
+            <ValidationErrors errors={validationErrors} />
+          )}
+
+          {error && validationErrors.length === 0 && (
             <div className="error-message">
               <strong>錯誤:</strong> {error}
             </div>

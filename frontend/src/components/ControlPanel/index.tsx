@@ -1,6 +1,7 @@
 import React from 'react';
 import { renderTSPL } from '../../services/tsplApi';
 import { RenderData } from '../../types/tspl';
+import { ValidationError } from '../../types/api';
 import './styles.css';
 
 interface ControlPanelProps {
@@ -8,6 +9,7 @@ interface ControlPanelProps {
   onRenderDataUpdate: (data: RenderData | null) => void;
   onLoadingChange: (loading: boolean) => void;
   onError: (error: string) => void;
+  onValidationErrors?: (errors: ValidationError[]) => void;
 }
 
 const ControlPanel: React.FC<ControlPanelProps> = ({
@@ -15,6 +17,7 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
   onRenderDataUpdate,
   onLoadingChange,
   onError,
+  onValidationErrors,
 }) => {
   const handlePreview = async () => {
     if (!tsplCode.trim()) {
@@ -25,13 +28,22 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
     try {
       onLoadingChange(true);
       onError('');
+      if (onValidationErrors) onValidationErrors([]);
 
       const response = await renderTSPL(tsplCode);
 
       if (response.success && response.data) {
         onRenderDataUpdate(response.data);
       } else {
-        onError('渲染失敗');
+        // 處理驗證錯誤
+        if (response.validation_errors && response.validation_errors.length > 0) {
+          if (onValidationErrors) {
+            onValidationErrors(response.validation_errors);
+          }
+          onError(response.error || 'TSPL 語法驗證失敗');
+        } else {
+          onError(response.error || '渲染失敗');
+        }
       }
     } catch (error: any) {
       onError(error.message || '渲染失敗');
@@ -44,6 +56,7 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
   const handleClear = () => {
     onRenderDataUpdate(null);
     onError('');
+    if (onValidationErrors) onValidationErrors([]);
   };
 
   return (

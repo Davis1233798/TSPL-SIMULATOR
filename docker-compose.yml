@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  tspl-simulator:
+    build: .
+    container_name: tspl-simulator
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      - SERVER_PORT=8080
+      - STORAGE_PATH=/root/data
+      - MQTT_BROKER=${MQTT_BROKER:-}
+      - MQTT_PORT=${MQTT_PORT:-1883}
+      - MQTT_CLIENT_ID=${MQTT_CLIENT_ID:-tspl-simulator}
+      - MQTT_USERNAME=${MQTT_USERNAME:-}
+      - MQTT_PASSWORD=${MQTT_PASSWORD:-}
+      - MQTT_TOPIC=${MQTT_TOPIC:-tspl/commands}
+    volumes:
+      - ./data:/root/data
+      - ./.env:/root/.env
+    networks:
+      - tspl-network
+
+  # 可選: Nginx 反向代理
+  nginx:
+    image: nginx:alpine
+    container_name: tspl-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./frontend/build:/usr/share/nginx/html:ro
+    depends_on:
+      - tspl-simulator
+    networks:
+      - tspl-network
+
+networks:
+  tspl-network:
+    driver: bridge

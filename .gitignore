@@ -1,6 +1,7 @@
 # Backend - Go
 backend/tspl-simulator
 backend/tspl-simulator.exe
+backend/data/
 *.exe
 *.dll
 *.so

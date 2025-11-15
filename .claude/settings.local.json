@@ -8,7 +8,18 @@
       "Bash($null)",
       "Bash(powershell -Command \".\\install-go.ps1\")",
       "Bash(git init:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git remote add:*)",
+      "Bash(git push:*)",
+      "Bash(go version:*)",
+      "Bash(.env.example)",
+      "Bash(go mod tidy:*)",
+      "Bash(go build:*)",
+      "Bash(powershell -Command \"cd backend; go build -o tspl-simulator.exe .\")",
+      "Bash(powershell -Command \"where.exe go\")",
+      "Bash(powershell -Command \"New-Item -ItemType Directory -Force -Path .github\\workflows\")",
+      "Bash(git remote set-url:*)"
     ],
     "deny": [],
     "ask": []
