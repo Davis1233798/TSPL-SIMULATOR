@@ -6,13 +6,15 @@ interface GoogleAdProps {
   format?: 'auto' | 'fluid' | 'rectangle' | 'vertical' | 'horizontal';
   responsive?: boolean;
   style?: React.CSSProperties;
+  className?: string;
 }
 
 const GoogleAd: React.FC<GoogleAdProps> = ({ 
   slot, 
   format = 'auto', 
   responsive = true,
-  style 
+  style,
+  className = ''
 }) => {
   useEffect(() => {
     try {
@@ -24,7 +26,7 @@ const GoogleAd: React.FC<GoogleAdProps> = ({
   }, []);
 
   return (
-    <div className="google-ad-container" style={style}>
+    <div className={`google-ad-container ${className}`} style={style}>
       <ins
         className="adsbygoogle"
         style={{ display: 'block' }}

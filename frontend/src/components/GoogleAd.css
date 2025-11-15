@@ -1,36 +1,57 @@
 .google-ad-container {
-  margin: 1rem 0;
+  margin: 1.5rem 0;
   padding: 1rem;
-  background-color: var(--bg-secondary);
-  border: 1px dashed var(--border-color);
-  border-radius: 8px;
-  min-height: 100px;
+  background-color: transparent;
+  border-radius: 4px;
+  min-height: 90px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
+  overflow: hidden;
 }
 
-.google-ad-container:hover {
-  border-color: #667eea;
+/* 頂部橫幅廣告 */
+.google-ad-top {
+  margin: 1rem auto;
+  max-width: 1200px;
+  min-height: 90px;
 }
 
-/* 廣告佔位符 (在沒有廣告時顯示) */
-.google-ad-container:empty::before {
-  content: '📢 廣告區域';
-  color: var(--text-secondary);
-  font-size: 0.9rem;
-  opacity: 0.5;
+/* 側邊欄廣告 */
+.google-ad-sidebar {
+  margin: 1rem 0;
+  min-height: 250px;
 }
 
+/* 確保廣告可見性 */
+.adsbygoogle {
+  display: block !important;
+  min-width: 200px;
+  min-height: 50px;
+}
+
+/* 深色模式支援 */
 [data-theme="dark"] .google-ad-container {
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: transparent;
 }
 
-/* 響應式廣告 */
+/* 響應式設計 */
 @media (max-width: 768px) {
   .google-ad-container {
-    margin: 0.5rem 0;
+    margin: 1rem 0;
     padding: 0.5rem;
   }
+  
+  .google-ad-top {
+    min-height: 50px;
+  }
+  
+  .google-ad-sidebar {
+    min-height: 100px;
+  }
+}
+
+/* 廣告加載狀態 */
+.google-ad-container ins.adsbygoogle[data-ad-status="unfilled"] {
+  display: none !important;
 }

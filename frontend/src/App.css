@@ -91,6 +91,46 @@ body {
   border-color: var(--border-color);
 }
 
+/* 頁尾 - Google Ads 要求 */
+.app-footer {
+  background-color: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+  padding: 2rem 1rem;
+  margin-top: 2rem;
+}
+
+.footer-content {
+  max-width: 1800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.footer-content p {
+  margin: 0 0 1rem;
+  color: var(--text-secondary);
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.footer-links a {
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+  color: #667eea;
+}
+
+.footer-links span {
+  color: var(--text-secondary);
+}
+
 @media (max-width: 1024px) {
   .app-container {
     flex-direction: column;
