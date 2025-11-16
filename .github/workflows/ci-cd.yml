@@ -39,7 +39,9 @@ jobs:
 
     - name: Build backend
       working-directory: ./backend
-      run: go build -v -o tspl-simulator .
+      run: |
+        # 靜態編譯,不依賴系統 GLIBC
+        CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -v -o tspl-simulator -ldflags="-s -w" .
 
     - name: Upload backend artifact
       uses: actions/upload-artifact@v4
