@@ -115,7 +115,7 @@ jobs:
         username: ${{ secrets.DEPLOY_USER }}
         key: ${{ secrets.DEPLOY_SSH_KEY }}
         port: ${{ secrets.DEPLOY_PORT || 22 }}
-        source: "backend/tspl-simulator,frontend/build/*,backend/.env.example,deploy/tspl-simulator.service,deploy/nginx-site.conf"
+        source: "backend/tspl-simulator,frontend/build/*,backend/.env.example,deploy/tspl-simulator.service,deploy/nginx-site.conf,deploy/diagnose.sh"
         target: "/opt/tspl-simulator"
         strip_components: 0
 
@@ -149,16 +149,29 @@ jobs:
           sudo ln -sf /etc/nginx/sites-available/tspl-simulator /etc/nginx/sites-enabled/tspl-simulator
           sudo nginx -t && sudo systemctl reload nginx || echo "Nginx config test failed"
 
+          # 設置診斷腳本權限
+          chmod +x deploy/diagnose.sh
+
           # 啟動新服務
           sudo systemctl daemon-reload
           sudo systemctl start tspl-simulator
           sudo systemctl enable tspl-simulator
 
           # 等待服務啟動
-          sleep 2
+          sleep 3
 
           # 檢查服務狀態
+          echo "=== 服務狀態 ==="
           sudo systemctl status tspl-simulator --no-pager || true
 
           # 顯示最近日誌以便調試
+          echo "=== 服務日誌 (最近 50 行) ==="
           sudo journalctl -u tspl-simulator -n 50 --no-pager
+
+          # 測試後端 API
+          echo "=== API 健康檢查 ==="
+          curl -f http://127.0.0.1:8080/api/health || echo "後端 API 無法連接"
+
+          # 檢查端口監聽
+          echo "=== 端口監聽狀態 ==="
+          sudo netstat -tlnp | grep 8080 || echo "端口 8080 未監聽"
