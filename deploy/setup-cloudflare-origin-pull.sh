@@ -17,10 +17,11 @@ echo ""
 
 # 步驟 2: 驗證證書
 echo "2. 驗證證書..."
-if openssl x509 -in /etc/ssl/cloudflare/origin-pull-ca.pem -noout -text | grep -q "Cloudflare"; then
-    echo "✅ 證書驗證成功"
+if openssl x509 -in /etc/ssl/cloudflare/origin-pull-ca.pem -noout -text > /dev/null 2>&1; then
+    echo "✅ 證書格式正確"
+    openssl x509 -in /etc/ssl/cloudflare/origin-pull-ca.pem -noout -subject -issuer
 else
-    echo "❌ 證書驗證失敗"
+    echo "❌ 證書格式錯誤"
     exit 1
 fi
 echo ""
