@@ -115,7 +115,7 @@ jobs:
         username: ${{ secrets.DEPLOY_USER }}
         key: ${{ secrets.DEPLOY_SSH_KEY }}
         port: ${{ secrets.DEPLOY_PORT || 22 }}
-        source: "backend/tspl-simulator,frontend/build/*,backend/.env.example,deploy/tspl-simulator.service"
+        source: "backend/tspl-simulator,frontend/build/*,backend/.env.example,deploy/tspl-simulator.service,deploy/nginx-site.conf"
         target: "/opt/tspl-simulator"
         strip_components: 0
 
@@ -144,6 +144,11 @@ jobs:
           # 安裝 systemd 服務文件
           sudo cp deploy/tspl-simulator.service /etc/systemd/system/
 
+          # 配置 Nginx
+          sudo cp deploy/nginx-site.conf /etc/nginx/sites-available/tspl-simulator
+          sudo ln -sf /etc/nginx/sites-available/tspl-simulator /etc/nginx/sites-enabled/tspl-simulator
+          sudo nginx -t && sudo systemctl reload nginx || echo "Nginx config test failed"
+
           # 啟動新服務
           sudo systemctl daemon-reload
           sudo systemctl start tspl-simulator
@@ -154,6 +159,6 @@ jobs:
 
           # 檢查服務狀態
           sudo systemctl status tspl-simulator --no-pager || true
-          
+
           # 顯示最近日誌以便調試
           sudo journalctl -u tspl-simulator -n 50 --no-pager

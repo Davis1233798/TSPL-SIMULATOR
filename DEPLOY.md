@@ -11,7 +11,7 @@
 
 | Secret 名稱 | 值 | 說明 |
 |------------|-----|------|
-| `DEPLOY_HOST` | `192.168.1.100` | Ubuntu 主機 IP 或域名 |
+| `DEPLOY_HOST` | `138.2.60.98` | Ubuntu 主機 IP 或域名 |
 | `DEPLOY_USER` | `ubuntu` | SSH 登入用戶名 |
 | `DEPLOY_SSH_KEY` | SSH 私鑰完整內容 | 用於 SSH 認證 |
 | `DEPLOY_PORT` | `22` | SSH 端口 (可選,默認 22) |
@@ -93,32 +93,23 @@ sudo systemctl daemon-reload
 
 #### 配置 Nginx
 
+**注意**: CI/CD 會自動部署 Nginx 配置,這裡僅供參考或手動配置時使用。
+
+CI/CD 會自動從 `deploy/nginx-site.conf` 部署配置文件到:
+- `/etc/nginx/sites-available/tspl-simulator`
+- `/etc/nginx/sites-enabled/tspl-simulator`
+
+如需手動配置:
 ```bash
 sudo nano /etc/nginx/sites-available/tspl-simulator
 ```
 
-內容:
-```nginx
-server {
-    listen 80;
-    server_name _;
+內容參考 `deploy/nginx-site.conf`:
+- 前端靜態文件: `/opt/tspl-simulator/frontend/build`
+- API 代理: `http://127.0.0.1:8080`
+- 包含 Gzip 壓縮、快取設定、安全標頭
 
-    # 前端
-    location / {
-        root /opt/tspl-simulator/frontend/build;
-        try_files $uri /index.html;
-    }
-
-    # API
-    location /api/ {
-        proxy_pass http://localhost:8080;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-    }
-}
-```
-
-啟用配置:
+手動啟用配置:
 ```bash
 sudo ln -s /etc/nginx/sites-available/tspl-simulator /etc/nginx/sites-enabled/
 sudo nginx -t
