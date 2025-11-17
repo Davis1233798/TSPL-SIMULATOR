@@ -48,12 +48,8 @@ const App: React.FC = () => {
       <SEO />
       <Header />
 
-      {/* 頂部橫幅廣告 - Google Ads 合規 */}
-      <GoogleAd 
-        slot="1234567890" 
-        format="horizontal" 
-        className="google-ad-top"
-      />
+      {/* 頂部橫幅廣告 - 自動廣告 (AdSense 會自動優化) */}
+      {/* 注意: 需要在 AdSense 後台啟用「自動廣告」功能 */}
 
       <div className="app-container">
         <div className="left-panel">
@@ -84,12 +80,7 @@ const App: React.FC = () => {
             </div>
           )}
 
-          {/* 左側邊欄廣告 */}
-          <GoogleAd 
-            slot="0987654321" 
-            format="rectangle" 
-            className="google-ad-sidebar"
-          />
+          {/* 左側邊欄廣告 - 自動廣告 */}
         </div>
 
         <div className="right-panel">
@@ -98,12 +89,7 @@ const App: React.FC = () => {
             isLoading={isLoading}
           />
 
-          {/* 右側邊欄廣告 */}
-          <GoogleAd 
-            slot="1122334455" 
-            format="rectangle" 
-            className="google-ad-sidebar"
-          />
+          {/* 右側邊欄廣告 - 自動廣告 */}
         </div>
       </div>
 
@@ -112,11 +98,11 @@ const App: React.FC = () => {
         <div className="footer-content">
           <p>© 2025 TSPL Simulator. {t('madeWith')} Davis Chen</p>
           <div className="footer-links">
-            <a href="/privacy">Privacy Policy</a>
+            <a href="/privacy.html">Privacy Policy</a>
             <span>|</span>
-            <a href="/terms">Terms of Service</a>
+            <a href="/terms.html">Terms of Service</a>
             <span>|</span>
-            <a href="/contact">Contact</a>
+            <a href="/contact.html">Contact</a>
           </div>
         </div>
       </footer>

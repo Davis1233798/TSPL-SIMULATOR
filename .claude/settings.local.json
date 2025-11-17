@@ -23,7 +23,8 @@
       "Bash(ssh:*)",
       "Bash(git rm:*)",
       "Bash(go test:*)",
-      "Bash(ssh-keygen:*)"
+      "Bash(ssh-keygen:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nFix AdSense review failures - Complete setup for approval\n\n✅ Critical fixes for AdSense compliance:\n- Created Contact page (contact.html) with multiple contact methods\n- Added ads.txt with publisher ID pub-5692204516534246\n- Updated sitemap.xml with real domain (tsplsimulator.dpdns.org)\n- Updated robots.txt with correct sitemap URL\n- Fixed all page links to use .html extensions\n- Updated all static pages with absolute URLs\n\n📝 Changes made:\n1. frontend/public/contact.html - NEW: Professional contact page\n2. frontend/public/ads.txt - NEW: AdSense authentication file\n3. frontend/public/sitemap.xml - Updated with all pages & real domain\n4. frontend/public/robots.txt - Fixed sitemap URL\n5. frontend/public/privacy.html - Fixed navigation links\n6. frontend/public/terms.html - Fixed navigation links\n7. frontend/src/App.tsx - Fixed footer links & added ad slot TODOs\n\n⚠️ Next steps:\n- Create 3 ad units in AdSense dashboard\n- Replace placeholder slot IDs in App.tsx\n- Deploy to production\n- Submit for AdSense review\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")"
     ],
     "deny": [],
     "ask": []
