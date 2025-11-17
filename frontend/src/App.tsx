@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import './App.css';
 import SEO from './components/SEO';
 import Header from './components/Header';
-import GoogleAd from './components/GoogleAd';
 import TSPLEditor from './components/TSPLEditor';
 import LabelPreview from './components/LabelPreview';
 import ControlPanel from './components/ControlPanel';
