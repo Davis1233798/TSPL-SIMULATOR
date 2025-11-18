@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://tsplsimulator.dpdns.org/sitemap.xml

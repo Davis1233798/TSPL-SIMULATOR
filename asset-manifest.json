@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/TSPL-simlator/static/css/main.4e22d110.css",
+    "main.js": "/TSPL-simlator/static/js/main.26bf4348.js",
+    "index.html": "/TSPL-simlator/index.html",
+    "main.4e22d110.css.map": "/TSPL-simlator/static/css/main.4e22d110.css.map",
+    "main.26bf4348.js.map": "/TSPL-simlator/static/js/main.26bf4348.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4e22d110.css",
+    "static/js/main.26bf4348.js"
+  ]
+}

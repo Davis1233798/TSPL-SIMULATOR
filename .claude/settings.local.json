@@ -29,7 +29,9 @@
       "Bash(npm install:*)",
       "Bash(gh pr create:*)",
       "Bash(git remote remove:*)",
-      "Bash(git config:*)"
+      "Bash(git config:*)",
+      "Bash(git checkout:*)",
+      "Bash(powershell:*)"
     ],
     "deny": [],
     "ask": []
