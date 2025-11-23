@@ -97,11 +97,6 @@ const App: React.FC = () => {
         <div className="footer-content">
           <p>© 2025 TSPL Simulator. </p>
           <div className="footer-links">
-            <a href="/privacy.html">Privacy Policy</a>
-            <span>|</span>
-            <a href="/terms.html">Terms of Service</a>
-            <span>|</span>
-            <a href="/contact.html">Contact</a>
           </div>
         </div>
       </footer>
