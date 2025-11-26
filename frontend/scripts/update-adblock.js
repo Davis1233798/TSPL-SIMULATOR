@@ -4,7 +4,7 @@ const https = require('https');
 const crypto = require('crypto');
 
 // Configuration
-const AD_BLOCK_URL = 'https://adbpage.com/adblock?v=3&format=js&lnxv=2';
+const AD_BLOCK_URL = 'https://adbpage.com/adblock?v=3&format=js';
 const PUBLIC_DIR = path.join(__dirname, '../public');
 const INDEX_HTML_PATH = path.join(PUBLIC_DIR, 'index.html');
 
@@ -49,7 +49,7 @@ function updateIndexHtml(newScriptFilename) {
 
     const MARKER_START = '<!-- ANTI-ADBLOCK-START -->';
     const MARKER_END = '<!-- ANTI-ADBLOCK-END -->';
-    const scriptTag = `<script type="text/javascript" src="%PUBLIC_URL%/${newScriptFilename}"></script>`;
+    const scriptTag = `<script id="aclib" type="text/javascript" src="%PUBLIC_URL%/${newScriptFilename}"></script>`;
     const newBlock = `${MARKER_START}\n    ${scriptTag}\n    ${MARKER_END}`;
 
     const regex = new RegExp(`${MARKER_START}[\\s\\S]*?${MARKER_END}`, 'g');
