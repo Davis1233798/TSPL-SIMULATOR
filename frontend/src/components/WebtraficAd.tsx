@@ -1,9 +1,14 @@
 import React, { useEffect } from 'react';
 
 const WebtraficAd: React.FC = () => {
+    const adContainerRef = React.useRef<HTMLDivElement>(null);
+
     useEffect(() => {
-        // Check if script already exists to prevent duplicates
-        if (document.querySelector('script[src="https://webtrafic.ru/ads.php?uid=17708"]')) {
+        const container = adContainerRef.current;
+        if (!container) return;
+
+        // Check if script is already in this container to prevent duplicates
+        if (container.querySelector('script[src="https://webtrafic.ru/ads.php?uid=17708"]')) {
             return;
         }
 
@@ -11,24 +16,22 @@ const WebtraficAd: React.FC = () => {
         script.src = "https://webtrafic.ru/ads.php?uid=17708";
         script.async = true;
 
-        const container = document.getElementById('webtraf_17708');
-        if (container) {
-            container.appendChild(script);
-        }
+        container.appendChild(script);
 
         return () => {
-            // Cleanup if needed, though ad scripts usually shouldn't be removed aggressively
-            // keeping it simple for now
+            // Optional: cleanup
         };
     }, []);
 
     return (
         <div
             id="webtraf_17708"
+            ref={adContainerRef}
             style={{
                 width: '468px',
                 height: '60px',
-                // Add some margin if needed for mobile/responsiveness
+                display: 'inline-block', // Ensure it behaves well in flex
+                backgroundColor: 'rgba(255,255,255,0.1)', // Temporary placeholder background to see if div exists
             }}
             className="webtrafic-ad"
         />

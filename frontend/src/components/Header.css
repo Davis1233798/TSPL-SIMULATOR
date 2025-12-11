@@ -96,4 +96,8 @@
   .header-title p {
     font-size: 0.9rem;
   }
+
+  .webtrafic-ad {
+    display: none !important;
+  }
 }
