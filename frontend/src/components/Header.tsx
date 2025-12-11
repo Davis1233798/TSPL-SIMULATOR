@@ -2,6 +2,7 @@ import React from 'react';
 import { useTheme } from '../ThemeContext';
 import { useTranslation } from 'react-i18next';
 import './Header.css';
+import WebtraficAd from './WebtraficAd';
 
 const Header: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
@@ -20,12 +21,14 @@ const Header: React.FC = () => {
           <h1>{t('title')}</h1>
           <p>{t('subtitle')}</p>
         </div>
-        
+
+        <WebtraficAd />
+
         <div className="header-controls">
           {/* Language Selector */}
           <div className="language-selector">
-            <select 
-              value={i18n.language} 
+            <select
+              value={i18n.language}
               onChange={(e) => i18n.changeLanguage(e.target.value)}
               aria-label={t('language')}
             >
@@ -38,8 +41,8 @@ const Header: React.FC = () => {
           </div>
 
           {/* Theme Toggle */}
-          <button 
-            className="theme-toggle" 
+          <button
+            className="theme-toggle"
             onClick={toggleTheme}
             aria-label={theme === 'light' ? t('darkMode') : t('lightMode')}
             title={theme === 'light' ? t('darkMode') : t('lightMode')}
